@@ -1,16 +1,27 @@
 from chepy import Chepy
 import re
+import pathlib
+import os 
 
-'''
-TODO: Make this dynamic by
-- Asking for filename
-- What is the first regex
-- What is the second regex
-- How many characters to capture?
-'''
+working_maldir = f"{pathlib.Path(__file__).parent.resolve()}/malware"
 
-filename = "/home/kali/Documents/a1b94e324beb19da2cabb254652df7c75dfcdad3c099012bb10e06448198d204.vbs"
+#List malware present in malware folder
+files = [f for f in os.listdir(working_maldir)]
 
+
+for f in range(len(files)):
+    print(f"[{f}]: {files[f]}")
+
+num = None
+while True:
+    num = int(input("Choose a number: "))
+
+    if num >= 0 and num < len(files):
+        break
+
+
+
+filename = f"{working_maldir}/{files[num]}"
 
 found_row = ""
 
@@ -44,7 +55,6 @@ if reg.find('+'):
 #Combine reg and the first_cap_group 
 
 defined_regx_1 = rf'{reg}{first_cap_group}'
-print(defined_regx_1)
 c = Chepy(filename)
 
 c.load_file()
@@ -90,3 +100,5 @@ c.find_replace(replace_regx,r'\1')
 
 with open('output.txt', 'w') as o:
     o.write(c._convert_to_str())
+
+print("A file is created. Please check 'output.txt'")
