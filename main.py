@@ -99,6 +99,9 @@ for i in range(offset_num):
 c.find_replace(replace_regx,r'\1')
 
 with open('output.txt', 'w') as o:
-    o.write(c._convert_to_str())
+    o.write(f"Variable containing the code: {reg}\n")
+    o.write(f"Function that obfuscates the code: {match_reg}\n")
+    o.write(f"Character steps: {offset_num}\n")
+    o.write(f"Deobfuscated code: \n{c._convert_to_str()}")
 
 print("A file is created. Please check 'output.txt'")
